@@ -21,11 +21,7 @@ To add services, simply add the following labels to the containers you want to a
       traefik.http.routers.SERVICE-secure.tls: "true"
       traefik.http.routers.SERVICE-secure.tls.certresolver: "cloudflare"
       traefik.http.routers.SERVICE-secure.rule: "Host(`service.example.com`)" # Change domain!
-      traefik.http.services.SERVICE-secure.loadbalancer.server.port: "8080" # Change port accordingly!
-
-networks:
-  traefik_proxy:
-    external: true      
+      traefik.http.services.SERVICE-secure.loadbalancer.server.port: "8080" # Change port accordingly! 
 ```
 
 ## Something still doesn't work!
