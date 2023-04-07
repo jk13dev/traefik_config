@@ -20,7 +20,8 @@ services:
 #      - "CF_API_EMAIL=CLOUDFLARE_EMAIL"                                        # Replace with your Cloudflare User's E-Mail.
 
     volumes:                                                                    # Adjust /PATH/TO accordingly!
-      - /PATH/TO/traefik/traefik.yml:/etc/traefik/traefik.yml:ro                # Traefik Configuration file
+      - /PATH/TO/traefik/traefik.yml:/etc/traefik/traefik.yml:ro                # Traefik Static Configuration file
+      - /PATH/TO/traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro                # Traefik Dynamic Configuration file
       - /PATH/TO/traefik/log:/etc/traefik/log                                   # Traefik Log Folder (optional)
       - /PATH/TO/traefik/acme.json:/etc/traefik/acme.json                       # Traefik acme.json File for Let's Encrypt Certificates
 #      - /var/run/docker.sock:/var/run/docker.sock:ro                           # Uncomment if you don't use a Docker Socket Proxy!
