@@ -1,0 +1,31 @@
+## DYNAMIC CONFIGURATION
+
+http:
+  routers:
+    service1:                                                                       # Name for your service
+      rule: "Host(`service1.example.com`)"                                          # Replace "example.com" with your Domain
+      service: service1-secure
+      entryPoints:
+      - websecure
+      tls:
+        certresolver: cloudflare
+
+  middlewares:
+    authelia:                                                                       # This is an example. Please only use it if you have Authelia configured
+      forwardAuth:
+        address: "http://authelia:9091/api/verify?rd=https://auth.example.com"      # Replace "example.com" with your Domain
+        trustForwardHeader: true
+        authResponseHeaders:
+          - "Remote-User"
+          - "Remote-Groups"
+          - "Remote-Name"
+          - "Remote-EMail"
+
+  services:
+    service1-secure:
+      loadBalancer:
+        servers:
+          - url: "http://10.10.10.1:9090"                                           # Replace IP and Port with the one of your Docker container.
+
+serversTransport:
+  insecureSkipVerify: true

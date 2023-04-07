@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik
+    networks:
+      - traefik_proxy                                                           # Network for Traefik. Adjust, if needed.
+
+    ports:
+      - "80:80/tcp"                                                             # Entrypoint "web". Optional, if you don't use HTTP Channgel for SSL   
+      - "443:443/tcp"                                                           # Entrypoint "websecure"
+      - "8888:8888/tcp"                                                         # Port for Traefik Dashboard. Optional if you don't use the Dashboard
+
+#    extra_hosts:
+#      - host.docker.internal:172.17.0.1                                        # This is optional, but needed if you have Docker Containers in Host Mode. Replace IP with IP of the Host Network.
+
+#    environment:                                                               # Remove if you do not use Cloudflare.
+#      - "CF_API_KEY=CLOUDFLARE_API_KEY"                                        # Replace with your API Key.
+#      - "CF_API_EMAIL=CLOUDFLARE_EMAIL"                                        # Replace with your Cloudflare User's E-Mail.
+
+    volumes:                                                                    # Adjust /PATH/TO accordingly!
+      - /PATH/TO/traefik/traefik.yml:/etc/traefik/traefik.yml:ro                # Traefik Configuration file
+      - /PATH/TO/traefik/log:/etc/traefik/log                                   # Traefik Log Folder (optional)
+      - /PATH/TO/traefik/acme.json:/etc/traefik/acme.json                       # Traefik acme.json File for Let's Encrypt Certificates
+#      - /var/run/docker.sock:/var/run/docker.sock:ro                           # Uncomment if you don't use a Docker Socket Proxy!
+
+    restart: always
+
+#    labels:                                                                    # Entirely optional. Only needed if you want to access Traefik through a domain.
+#      traefik.enable: "true"
+#      traefik.http.routers.traefik-secure.entrypoints: "websecure"
+#      traefik.http.routers.traefik-secure.tls: "true"
+#      traefik.http.routers.traefik-secure.tls.certresolver: "cloudflare"              
+#      traefik.http.routers.traefik-secure.rule: "Host(`traefik.example.com`)"
+#      traefik.http.services.traefik-secure.loadbalancer.server.port: "8888"
+
+networks:
+  traefik_proxy:
+    name: traefik_proxy
+    external: true

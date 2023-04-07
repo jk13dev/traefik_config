@@ -1,0 +1,38 @@
+## STATIC CONFIGURATION
+log:
+  level: DEBUG
+
+api:                                                                                # Both settings are only necessary if you use the Dashboard at all. Turn off when done configuring.
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+
+  websecure:
+    address: ":443"
+
+  traefik:                                                                          # Only necessary if you plan to access the Traefik Dashboard.
+    address: ":8888"
+
+providers:
+  docker:
+    watch: true
+    endpoint: "tcp://172.17.0.2:2375"                                               # Replace IP address for Docker Socket proxy (recommended). Alternatively with "unix:///var/run/docker.sock".
+    exposedByDefault: false
+  file:
+    filename: "/etc/traefik/dynamic.yml"
+    watch: true
+
+certificatesResolvers:
+
+    cloudflare:
+      acme:
+        email: youremail@example.com                                                # Replace with your E-Mail.
+        storage: "/etc/traefik/acme.json"
+        dnsChallenge:
+          provider: cloudflare
+          resolvers:
+            - "1.1.1.1:53"
+            - "1.0.0.1:53"
