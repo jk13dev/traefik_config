@@ -1,0 +1,15 @@
+# Configures secure headers for your Traefik installation. Might need to be tweaked.
+
+http:
+  middlewares:
+    secHeaders:
+      headers:
+        sslRedirect: true
+        contentSecurityPolicy: script-src 'self'
+        referrerPolicy: origin-when-cross-origin
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15768000

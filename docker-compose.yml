@@ -8,7 +8,7 @@ services:
       - traefik_proxy                                                           # Network for Traefik. Adjust, if needed.
 
     ports:
-      - "80:80/tcp"                                                             # Entrypoint "web". Optional, if you don't use HTTP Channgel for SSL   
+#      - "80:80/tcp"                                                            # Entrypoint "web". Optional, if you don't use HTTP or HTTP challenge for SSL   
       - "443:443/tcp"                                                           # Entrypoint "websecure"
       - "8888:8888/tcp"                                                         # Port for Traefik Dashboard. Optional if you don't use the Dashboard
 
@@ -20,13 +20,19 @@ services:
 #      - "CF_API_EMAIL=CLOUDFLARE_EMAIL"                                        # Replace with your Cloudflare User's E-Mail.
 
     volumes:                                                                    # Adjust /PATH/TO accordingly!
-      - /PATH/TO/traefik/traefik.yml:/etc/traefik/traefik.yml:ro                # Traefik Static Configuration file
-      - /PATH/TO/traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro                # Traefik Dynamic Configuration file
-      - /PATH/TO/traefik/log:/etc/traefik/log                                   # Traefik Log Folder (optional)
-      - /PATH/TO/traefik/acme.json:/etc/traefik/acme.json                       # Traefik acme.json File for Let's Encrypt Certificates
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro                # Traefik Static Configuration file
+      - ./traefik/dynamic:/etc/traefik/dynamic.yml                       # Traefik Dynamic Configuration file
+      - ./traefik/log:/etc/traefik/log                                   # Traefik Log Folder (optional)
+      - ./traefik/acme.json:/etc/traefik/acme.json                       # Traefik acme.json File for Let's Encrypt Certificates
 #      - /var/run/docker.sock:/var/run/docker.sock:ro                           # Uncomment if you don't use a Docker Socket Proxy!
 
     restart: always
+
+    command:
+      - --entrypoints.websecure.http.tls.domains[0].main=<DOMAIN>               # Sets up the default domain to generate a wildcard domain
+      - --entrypoints.websecure.http.tls.domains[0].sans=<SUBDOMAIN>
+      - --entrypoints.websecure.http.tls.options=default@file                   # Adjusts the TLS settings to require TLS v1.2 minimum
+      - --entrypoints.websecure.http.middlewares=secHeaders@file                # Adds middleware "secHeaders" by default for secure headers
 
 #    labels:                                                                    # Entirely optional. Only needed if you want to access Traefik through a domain.
 #      traefik.enable: "true"

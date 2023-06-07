@@ -12,6 +12,9 @@ entryPoints:
 
   websecure:
     address: ":443"
+    http:
+      middlewares:
+        - secHeaders@file
 
   traefik:                                                                          # Only necessary if you plan to access the Traefik Dashboard.
     address: ":8888"
@@ -19,10 +22,11 @@ entryPoints:
 providers:
   docker:
     watch: true
-    endpoint: "tcp://172.17.0.2:2375"                                               # Replace IP address for Docker Socket proxy (recommended). Alternatively with "unix:///var/run/docker.sock".
+    endpoint: "tcp://<IP>:2375"                                                     # Replace IP address for Docker Socket proxy (recommended). Alternatively with "unix:///var/run/docker.sock".
     exposedByDefault: false
   file:
-    filename: "/etc/traefik/dynamic.yml"
+#    filename: "/etc/traefik/dynamic.yml"                                           # Uncomment in order to use one dynamic configuration file
+    folder: "etc/traefik/dynamic"                                                   # Uses a folder to watch for dynamic configurations. All .yaml files will be watched and added automatically
     watch: true
 
 certificatesResolvers:
@@ -36,3 +40,6 @@ certificatesResolvers:
           resolvers:
             - "1.1.1.1:53"
             - "1.0.0.1:53"
+
+# serversTransport:                                                                 # May be necessary for some services. If you see connection issues due to self-signed certificates of the host, uncomment this.
+#  insecureSkipVerify: true            
