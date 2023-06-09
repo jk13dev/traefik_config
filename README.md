@@ -4,7 +4,7 @@ Once upon a time, when I first setup my homelab setup like I have it now, I was 
 
 Most example configs I found were overloaded or relied a lot on Docker labels. Traefiks documentation is also in parts rather confusing, which didn't help.
 
-This repo contains a very simple, yet working config. You may have to adjust it according to your needs. Especially if you have special use cases requiring for middlewares, etc. However, for the very simplest task that a reserve proxy should accomplish, it suffices. 
+This repo contains a very simple, yet working config. You may have to adjust it according to your needs. Especially if you have special use cases requiring for middlewares, etc. However, for the very simplest task that a reserve proxy should accomplish, it suffices. SSL is preconfigured for use with a Cloudflare DNS challenge. In addition, SSL is configured to only use TLS v1.2 or up, along with preset lists of ciphers and curves.
 
 This config relies much more on the configuration file "traefik.yml". In fact, your Trafik container does not need any labels to run. **If you already tried setting up Traefik, and have added commands or labels to its container, make sure to remove them.**
 
