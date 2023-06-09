@@ -23,16 +23,13 @@ This config relies much more on the configuration file "traefik.yml". In fact, y
 ``` yml
     labels:
       traefik.enable: true
-      traefik.http.routers.SERVICE-secure.entrypoints: "websecure"
-      traefik.http.routers.SERVICE-secure.tls: "true"
-      traefik.http.routers.SERVICE-secure.tls.certresolver: "cloudflare"
-      traefik.http.routers.SERVICE-secure.rule: "Host(`service.example.com`)" # Change domain!
-      traefik.http.services.SERVICE-secure.loadbalancer.server.port: "8080" # Change port accordingly! 
+      traefik.http.routers.$SERVICE-secure.entrypoints: "websecure"
+      traefik.http.routers.$SERVICE-secure.tls: "true"
+      traefik.http.routers.$SERVICE-secure.tls.certresolver: "cloudflare"
+      traefik.http.routers.$SERVICE-secure.rule: "Host(`service.example.com`)" # Change domain!
+      traefik.http.services.$SERVICE-secure.loadbalancer.server.port: "8080" # Change port accordingly! 
 ```
-#### ***Please note:***
-There are a few adjustments and tweaks you generally need to do. Look at the different files, change the commented lines if necessary, run the container.
-
-To add services, simply add the following labels to the containers you want to add to Traefik:
+To add services, simply add the following labels to the containers you want to add to Traefik. Adjust $SERVICE with the name for the service of your choice, the domain and the port accordingly.
 
 ## Something still doesn't work!
 
