@@ -8,6 +8,18 @@ This repo contains a very simple, yet working config. You may have to adjust it 
 
 This config relies much more on the configuration file "traefik.yml". In fact, your Trafik container does not need any labels to run. **If you already tried setting up Traefik, and have added commands or labels to its container, make sure to remove them.**
 
+# Folder structure
+
+```
+└── traefik
+      |── docker-compose.yml
+      |── traefik.yml
+      └── dynamic
+            └── your-dynamic-config.yml
+```
+
+# Use of Docker labels
+
 ### ***Please note:***
 
 There are a few adjustments and tweaks you generally need to do. Look at the different files, change the commented lines if necessary, run the container.
