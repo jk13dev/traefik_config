@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    test-auth:
+      basicAuth:
+        users:
+          - "test:$2a$12$dnJ3pFvsWu70/7V906dk.uYWAZc73r7ztrU7Ct9GX/Dyxy2eX2Ksm"         # Basic auth user "test". Password = "test"

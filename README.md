@@ -31,6 +31,12 @@ This config relies much more on the configuration file "traefik.yml". In fact, y
 ```
 To add services, simply add the following labels to the containers you want to add to Traefik. Adjust $SERVICE with the name for the service of your choice, the domain and the port accordingly.
 
+If you want to add a middleware, simply include the following label:
+
+``` yml
+      traefik.http.routers.$SERVICE-secure.middlewares: "basicAuth@file" # Change middleware accordingly! 
+```
+
 ## Something still doesn't work!
 
 Check first if your container is accessible over IP. If it is, check the labels. Ensure they're correct. A novice mistake is to use the wrong port, so check to make sure you use the right one. If you define ports, always refer to the right port (e.g. 8888:**8080**). Please also check your logs accordingly, google the error you're shown.
