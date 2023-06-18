@@ -37,6 +37,8 @@ If you want to add a middleware, simply include the following label:
       traefik.http.routers.$SERVICE-secure.middlewares: "basicAuth@file" # Change middleware accordingly! 
 ```
 
+A middleware for HTML basic auth (basicAuth@file) and rate limits (rate_limit@file) are already in this repo. You will have to adjust the username and password of the basic auth middleware.
+
 ## Something still doesn't work!
 
 Check first if your container is accessible over IP. If it is, check the labels. Ensure they're correct. A novice mistake is to use the wrong port, so check to make sure you use the right one. If you define ports, always refer to the right port (e.g. 8888:**8080**). Please also check your logs accordingly, google the error you're shown.
