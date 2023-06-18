@@ -15,6 +15,7 @@ entryPoints:
     http:
       middlewares:
         - secHeaders@file
+        - rate_limit@file
 
   traefik:                                                                          # Only necessary if you plan to access the Traefik Dashboard.
     address: ":8888"
